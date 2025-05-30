@@ -1,5 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import App from './App';
+/* global describe, test */
 
 describe('App Component', () => {
   test('renders without crashing', () => {

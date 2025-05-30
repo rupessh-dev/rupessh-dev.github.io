@@ -1,3 +1,4 @@
+/* global jest */
 import '@testing-library/jest-dom';
 
 // Mock window.matchMedia
