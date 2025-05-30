@@ -14,8 +14,8 @@ jobs:
     - uses: actions/checkout@v4
     - name: Configure Git for gh-pages
       run: |
-        git config --global user.email "github-actions@github.com"
-        git config --global user.name "github-actions"
+        git config --global user.email "sattirupeshreddy@gmail.com"
+        git config --global user.name "rupessh-dev"
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
