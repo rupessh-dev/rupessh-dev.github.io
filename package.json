@@ -2,7 +2,7 @@
   "name": "portfolio",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://rupesh-dev.github.io/",
+  "homepage": "https://rupessh-dev.github.io/",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist -r https://x-access-token:${GITHUB_TOKEN}@github.com/rupesh-dev/rupessh-dev.github.io.git",
+    "deploy": "gh-pages -d dist -r https://x-access-token:${GITHUB_TOKEN}@github.com/rupessh-dev/rupessh-dev.github.io.git",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
