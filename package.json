@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
+    "deploy": "gh-pages -d dist -r https://x-access-token:${GITHUB_TOKEN}@github.com/rupesh-dev/rupessh-dev.github.io.git",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
