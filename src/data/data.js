@@ -1,5 +1,5 @@
 import profileImg from "../assets/images/profileImg.webp";
-import pwLogo from "../assets/images/pwlogo.webp";
+import pwLogo from "../assets/images/pwLogo.webp";
 import sagarLogo from "../assets/images/sagarLogo.webp";
 import pumperAppLogo from "../assets/images/pumperAppLogo.webp";
 import pwAppLogo from "../assets/images/pwAppLogo.webp";
