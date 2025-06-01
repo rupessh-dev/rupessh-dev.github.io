@@ -1,0 +1,99 @@
+export function enableBasicSecurity() {
+  // Disable right-click
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+  };
+  // Disable dev tools shortcuts and print/screenshot
+  const handleKeyDown = (e) => {
+    // F12
+    if (e.key === "F12") {
+      e.preventDefault();
+    }
+    // Ctrl+Shift+I or Ctrl+Shift+J
+    if (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) {
+      e.preventDefault();
+    }
+    // Ctrl+U
+    if (e.ctrlKey && e.key.toLowerCase() === "u") {
+      e.preventDefault();
+    }
+    // Ctrl+P or Cmd+P (Print)
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "p") {
+      e.preventDefault();
+      alert("Printing is disabled on this site.");
+    }
+    // PrtScn (Print Screen)
+    if (e.key === "PrintScreen") {
+      e.preventDefault();
+      // Optionally, copy a blank value to clipboard
+      try {
+        navigator.clipboard.writeText("");
+      } catch (error) {
+        console.error("Failed to copy blank value to clipboard:", error);
+      }
+      alert("Screenshots are disabled on this site.");
+    }
+    // Cmd+Shift+4 (macOS screenshot)
+    if (e.metaKey && e.shiftKey && e.key === "4") {
+      e.preventDefault();
+      alert("Screenshots are disabled on this site.");
+    }
+  };
+  document.addEventListener("contextmenu", handleContextMenu);
+  document.addEventListener("keydown", handleKeyDown);
+
+  // Detect dev tools open and show warning
+  let devtoolsOpen = false;
+  const checkDevTools = () => {
+    const threshold = 160;
+    const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+    const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+    if (
+      widthThreshold ||
+      heightThreshold ||
+      (window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized)
+    ) {
+      if (!devtoolsOpen) {
+        devtoolsOpen = true;
+        // Styled warning
+        console.log(
+          "%cWarning! Please close the dev tools.",
+          "color: #fff; background: red; font-size: 14px; font-weight: bold; padding: 4px; border-radius: 8px;"
+        );
+      }
+    } else {
+      devtoolsOpen = false;
+    }
+  };
+  const devtoolsInterval = setInterval(checkDevTools, 500);
+
+  // Block eval and Function constructor
+  try {
+    window.eval = function () {
+      throw new Error("Not allowed: Console code execution is disabled.");
+    };
+    window.Function = function () {
+      throw new Error("Not allowed: Console code execution is disabled.");
+    };
+  } catch (e) {
+    // Some browsers may not allow overwriting
+  }
+
+  // Optionally, hijack console methods to show a warning
+  const originalLog = console.log;
+  console.log = function () {
+    originalLog(
+      "%cNot allowed: Do not use the console to run code on this site.",
+      "color: #fff; background: red; font-size: 14px; font-weight: bold; padding: 4px; border-radius: 8px;"
+    );
+    // Optionally, comment out the next line to suppress all logs
+    // originalLog.apply(console, args);
+  };
+
+  // Return a cleanup function
+  return () => {
+    document.removeEventListener("contextmenu", handleContextMenu);
+    document.removeEventListener("keydown", handleKeyDown);
+    clearInterval(devtoolsInterval);
+  };
+}

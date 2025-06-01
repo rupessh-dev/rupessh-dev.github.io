@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import "./App.css";
+import Home from "./components/Home/Home";
+import data from "./data/data";
+import { useState, useEffect } from "react";
+import GradientLoader from "./utils/loader";
+import { enableBasicSecurity } from "./utils/secure";
+import Aurora from "./components/Aurora/Aurora";
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    enableBasicSecurity();
+    const timer = setTimeout(() => setLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div style={{ position: "relative", minHeight: "100vh" }}>
+      {loading && <GradientLoader />}
+      {!loading && (
+        <>
+        <div style={{ position: "relative", zIndex: 1 }}>
+        <Aurora
+        colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
+        blend={0.5}
+        amplitude={1.0}
+        speed={0.5}
+      />
+          <Home data={data} />
+        </div>
+        </>
+      )}
+    </div>
+  );
 }
-
-export default App
+export default App;
