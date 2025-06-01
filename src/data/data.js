@@ -1,4 +1,17 @@
-import profileImg from "../assets/images/profileImg.png";
+import profileImg from "../assets/images/profileImg.webp";
+import pwLogo from "../assets/images/pwlogo.webp";
+import sagarLogo from "../assets/images/sagarLogo.webp";
+import pumperAppLogo from "../assets/images/pumperAppLogo.webp";
+import pwAppLogo from "../assets/images/pwAppLogo.webp";
+import mritsLogo from "../assets/images/mritsLogo.webp";
+// import dsLogo from "../assets/images/dsLogo.webp";
+// import tsbdLogo from "../assets/images/tsbdLogo.webp";
+import svecLogo from "../assets/images/svecLogo.webp";
+import sasiLogo from "../assets/images/sasiLogo.webp";
+import mahatiLogo from "../assets/images/mahatiLogo.webp";
+import githubLogo from "../assets/images/githubLogo.webp";
+import linkedinLogo from "../assets/images/linkedinLogo.webp";
+import gmailLogo from "../assets/images/gmailLogo.webp";
 const data = {
   menu: [
     {
@@ -45,7 +58,7 @@ const data = {
       company: "Proveway Pvt. Ltd.",
       designation: "Senior Developer",
       duration: "Aug 2021-Present",
-      image:"https://media.glassdoor.com/sqll/3814443/proveway-squareLogo-1633064917936.png",
+      image:pwLogo,
       summary: [
         "Developed full stack applications using Shopify Polaris and the MERN stack, ensuring seamless user experiences and robust backend functionality.",
         "Achieved Built for Shopify status by following best coding practices, enhancing merchant trust, and increasing app installations by 30%.",
@@ -69,7 +82,7 @@ const data = {
       company: "Sagar Software Solutions Pvt. Ltd.",
       designation: "Team Lead & PHP Developer",
       duration: "Aug 2019-Aug 2021",
-      image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeUOV2_8FWHKcxC_4lZDQYUFA7hhtUOuS7OQ&s",
+      image:sagarLogo,
       summary: [
         "Providing technical leadership by guiding a team of 5 members, assigning tasks, and ensuring 100% adherence to deadlines.",
         "Conducted code reviews that improved code quality, reducing post-release issues by 30%.",
@@ -83,8 +96,7 @@ const data = {
     {
       title: "Pumper Bundles Volume Discount",
       company: "Proveway Pvt. Ltd.",
-      image:
-        "https://cdn.shopify.com/app-store/listing_images/d68f550a51b900b4cb25b46d9098b496/icon/CIumv63twf4CEAE=.png",
+      image:pumperAppLogo,
       link: "https://apps.shopify.com/pumper-quantity-breaks-product-bundles-discounts",
       summary: [
         "Independently developed the entire pricing module for the Pumper app, implementing features such as transaction emails, coupon code functionality, feature requests, and changelog. This resulted in a 30% increase in user engagement.",
@@ -95,8 +107,7 @@ const data = {
     {
       title: "Proveway PayPal Sync",
       company: "Proveway Pvt. Ltd.",
-      image:
-        "https://cdn.shopify.com/app-store/listing_images/556e9e4276e7fc8c559e8269256d2d9b/icon/CPeCytza8_wCEAE=.png",
+      image: pwAppLogo,
       link: "https://apps.shopify.com/add-paypal-tracking-by-uptrack",
       summary: [
         "Independently rewrote the entire Proveway PayPal Sync app from scratch, eliminating 20% of redundant code and optimizing performance by 60%. This led to a 40% increase in user engagement and a 75% reduction in support tickets.",
@@ -108,8 +119,7 @@ const data = {
     {
       title: "Malla Reddy Institute of Technology & Science (MRITS)",
       company: "Sagar Software Solutions Pvt. Ltd.",
-      image:
-        "https://cpng.pikpng.com/pngl/s/562-5620957_malla-reddy-institute-of-technology-and-science-malla.png",
+      image: mritsLogo,
       link: "https://www.mrits.ac.in/",
       summary: [
         "Revamped the outdated UI with a modern, user-friendly design, improving user engagement by 25%. Implemented robust backend functionalities to seamlessly manage the front-end.",
@@ -119,7 +129,7 @@ const data = {
     // {
     //   title: "Digital Students",
     //   company: "Sagar Software Solutions Pvt. Ltd.",
-    //   image:"https://digitalstudents.in/images/favicon.png",
+    //   image: dsLogo,
     //   link: "https://digitalstudents.in/",
     //   summary: [
     //     "Revamped the outdated UI with a modern, user-friendly design, improving user engagement by 25%. Implemented robust backend functionalities to seamlessly manage the front-end.",
@@ -129,7 +139,7 @@ const data = {
     // {
     //   title: "Telangana Biodiversity Board",
     //   company: "Sagar Software Solutions Pvt. Ltd.",
-    //   image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqcZH1F9woZr8dtbmo2pHczArvVSR55a-O8A&s",
+    //   image: tsbdLogo,
     //   link: "",
     //   summary: [
     //     "Revamped the outdated UI with a modern, user-friendly design, improving user engagement by 25%. Implemented robust backend functionalities to seamlessly manage the front-end.",
@@ -403,19 +413,19 @@ const data = {
       college: "Sri Vasavi Engineering College",
       degree: "B.Tech in Electronics and Communication Engineering",
       duration: "2013 - 2017",
-      image: "https://www.srivasaviengg.ac.in/stuver/css/vasavi_logo.png",
+      image: svecLogo,
     },
     {
       college: "Sasi Junior College",
       degree: "Intermediate (M.P.C)",
       duration: "2011 - 2013",
-      image: "https://play-lh.googleusercontent.com/3o5FuI_sbNEVX4A-PzLbz1cyzA7yZnGqKM1SBImpkiEuwoH0P6O-nyZZeKKFWP481A",
+      image: sasiLogo,
     },
     {
       college: "Mahati EM School",
       degree: "SSC (Class X)",
       duration: "2010 - 2011",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT12pASkdm-RfV70VRpFr-gmEoJgzd3f4CdUw&s",
+      image: mahatiLogo,
     },
   ],
   contact: [
@@ -423,19 +433,19 @@ const data = {
       name: "GitHub",
       value: "rupeshreddysatti",
       link: "/",
-      icon: "https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png",
+      icon: githubLogo,
     },
     {
       name: "LinkedIn",
       value: "rupeshreddysatti",
       link: "https://in.linkedin.com/in/rupeshreddysatti",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg",
+      icon: linkedinLogo,
     },
     {
       name: "Email",
       value: "sattirupeshreddy@gmail.com",
       link: "mailto:sattirupeshreddy@gmail.com",
-      icon: "https://cdn-icons-png.flaticon.com/512/281/281769.png",
+      icon: gmailLogo,
     },
   ],
 };
