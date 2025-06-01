@@ -24,4 +24,10 @@ export default {
     ]
   },
   testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
+  transformIgnorePatterns: [
+    "/node_modules/(?!ogl)/"
+  ],
+  transform: {
+    "^.+\\.[jt]sx?$": "babel-jest"
+  }
 }; 
