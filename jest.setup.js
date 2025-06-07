@@ -14,4 +14,17 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),
   })),
-}); 
+});
+
+// Mock IntersectionObserver for jsdom
+if (typeof window.IntersectionObserver === 'undefined') {
+  class IntersectionObserver {
+    constructor() {}
+    observe() { return null; }
+    unobserve() { return null; }
+    disconnect() { return null; }
+    takeRecords() { return []; }
+  }
+  window.IntersectionObserver = IntersectionObserver;
+  global.IntersectionObserver = IntersectionObserver;
+} 

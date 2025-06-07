@@ -1,6 +1,6 @@
 body {
   background-color: #000000;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-optical-sizing: auto;
   letter-spacing: normal;
 }
@@ -15,22 +15,12 @@ pre {
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 8px;
-  background: linear-gradient(
-    135deg,
-    #2a3762 0%,
-    #3a2956 50%,
-    #181826 100%
-  );
+  background: linear-gradient(135deg, #2a3762 0%, #3a2956 50%, #181826 100%);
   min-height: 40px;
   border: 3px solid #181826;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    135deg,
-    #3a4a84 0%,
-    #4a396a 50%,
-    #2a2a3a 100%
-  );
+  background: linear-gradient(135deg, #3a4a84 0%, #4a396a 50%, #2a2a3a 100%);
 }
 ::-webkit-scrollbar-track {
   background: #181826;
@@ -39,4 +29,44 @@ pre {
 * {
   scrollbar-width: thin;
   scrollbar-color: #2a3762 #181826;
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-out-left {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+}
+@keyframes slide-out-right {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
+.animate-slide-in-right {
+  animation: slide-in-right 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.animate-slide-out-left {
+  animation: slide-out-left 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.animate-slide-out-right {
+  animation: slide-out-right 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
