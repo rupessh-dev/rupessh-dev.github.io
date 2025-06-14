@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate PWA Icons</title>
+</head>
+<body>
+    <h1>PWA Icon Generator</h1>
+    <p>This page will generate the required PNG icons for the PWA.</p>
+    
+    <canvas id="canvas192" width="192" height="192" style="border: 1px solid #ccc; margin: 10px;"></canvas>
+    <canvas id="canvas512" width="512" height="512" style="border: 1px solid #ccc; margin: 10px;"></canvas>
+    
+    <br>
+    <button onclick="downloadIcon(192)">Download 192x192 Icon</button>
+    <button onclick="downloadIcon(512)">Download 512x512 Icon</button>
+
+    <script>
+        function createIcon(size) {
+            const canvas = document.getElementById(`canvas${size}`);
+            const ctx = canvas.getContext('2d');
+            
+            // Create gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#a259ff');
+            gradient.addColorStop(0.5, '#6ec1e4');
+            gradient.addColorStop(1, '#ff6ec4');
+            
+            // Draw rounded rectangle background
+            const radius = size * 0.125; // 12.5% radius
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.roundRect(0, 0, size, size, radius);
+            ctx.fill();
+            
+            // Draw R letter
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = size * 0.0625; // 6.25% of size
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            const scale = size / 100;
+            ctx.beginPath();
+            // R shape scaled to canvas size
+            ctx.moveTo(30 * scale, 80 * scale);
+            ctx.lineTo(30 * scale, 20 * scale);
+            ctx.lineTo(60 * scale, 20 * scale);
+            ctx.quadraticCurveTo(80 * scale, 20 * scale, 70 * scale, 40 * scale);
+            ctx.quadraticCurveTo(60 * scale, 60 * scale, 30 * scale, 60 * scale);
+            ctx.moveTo(60 * scale, 60 * scale);
+            ctx.lineTo(75 * scale, 80 * scale);
+            ctx.stroke();
+        }
+        
+        function downloadIcon(size) {
+            const canvas = document.getElementById(`canvas${size}`);
+            const link = document.createElement('a');
+            link.download = `icon-${size}x${size}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        // Generate icons on page load
+        createIcon(192);
+        createIcon(512);
+    </script>
+</body>
+</html> 
