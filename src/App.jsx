@@ -3,7 +3,7 @@ import Home from "./components/Home/Home";
 import data from "./data/data";
 import { useState, useEffect } from "react";
 import GradientLoader from "./utils/loader";
-// import { enableBasicSecurity } from "./utils/secure";
+import { enableBasicSecurity } from "./utils/secure";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ComingSoon from "./components/ComingSoon";
 import ToolsMenu from "./components/ToolsMenu";
@@ -14,7 +14,7 @@ import { OfflineAlert } from "./components/OfflineAlert";
 function App() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    // enableBasicSecurity();
+    enableBasicSecurity();
     setLoading(false);
   }, []);
   return (
