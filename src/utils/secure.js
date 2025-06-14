@@ -50,13 +50,26 @@ export function enableBasicSecurity() {
 
   // Detect dev tools open and show warning
   let devtoolsOpen = false;
+  let initialWidthDiff = window.outerWidth - window.innerWidth;
+  let initialHeightDiff = window.outerHeight - window.innerHeight;
+  
   const checkDevTools = () => {
-    const threshold = 160;
-    const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-    const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+    // Use a more conservative threshold and compare against initial values
+    const threshold = 200;
+    const currentWidthDiff = window.outerWidth - window.innerWidth;
+    const currentHeightDiff = window.outerHeight - window.innerHeight;
+    
+    // Check if the difference has significantly increased from initial values
+    const widthThreshold = (currentWidthDiff - initialWidthDiff) > threshold;
+    const heightThreshold = (currentHeightDiff - initialHeightDiff) > threshold;
+    
+    // Additional check: significant change in both dimensions or extreme values
+    const isDevToolsLikelyOpen = 
+      (widthThreshold || heightThreshold) &&
+      (currentWidthDiff > 300 || currentHeightDiff > 300);
+    
     if (
-      widthThreshold ||
-      heightThreshold ||
+      isDevToolsLikelyOpen ||
       (window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized)
     ) {
       if (!devtoolsOpen) {
