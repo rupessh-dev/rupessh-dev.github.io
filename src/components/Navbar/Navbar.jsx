@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-const Navbar = ({ data }) => {
+const Navbar = ({ data, showLabsButton = true, showMobileMenu = true }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,9 +34,18 @@ const Navbar = ({ data }) => {
     };
   }, [menuOpen]);
 
+  // Handler for closing menu with animation
+  const handleCloseMenu = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setMenuOpen(false);
+      setIsClosing(false);
+    }, 300); // Match animation duration
+  };
+
   // Handler for Home click
   const handleHomeClick = () => {
-    setMenuOpen(false);
+    handleCloseMenu();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -85,55 +95,61 @@ const Navbar = ({ data }) => {
             {item.name}
           </a>
         ))}
-        <button
-          className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded-xl font-semibold text-sm text-white transition hover:brightness-125 justify-center w-full hover:bg-[#4a5568]"
-          aria-label="My Labs"
-          onClick={() => {
-            navigate("/dev-tools");
-          }}
-        >
-          {/* Test Tube/Beaker Icon */}
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3v6.75m0 0L5.25 21m4.5-11.25h4.5m0 0L18.75 21m-4.5-11.25V3" />
-          </svg>
-          My Labs
-        </button>
-      </div>
-
-      {/* Mobile Hamburger/Close Icon (always in navbar, same position) */}
-      <div className="lg:hidden">
-        {!menuOpen && (
+        {showLabsButton && (
           <button
-            className="text-white focus:outline-none"
-            onClick={() => setMenuOpen(true)}
-            aria-label="Open menu"
+            className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded-xl font-semibold text-sm text-white transition hover:brightness-125 justify-center w-full hover:bg-[#4a5568]"
+            aria-label="Labs"
+            onClick={() => {
+              navigate("/labs");
+            }}
           >
-            <svg
-              className="w-8 h-8"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+            {/* Test Tube/Beaker Icon */}
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3v6.75m0 0L5.25 21m4.5-11.25h4.5m0 0L18.75 21m-4.5-11.25V3" />
             </svg>
+            Labs
           </button>
         )}
       </div>
 
+      {/* Mobile Hamburger/Close Icon (always in navbar, same position) */}
+      {showMobileMenu && (
+        <div className="lg:hidden">
+          {!menuOpen && (
+            <button
+              className="text-white focus:outline-none"
+              onClick={() => setMenuOpen(true)}
+              aria-label="Open menu"
+            >
+              <svg
+                className="w-8 h-8"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          )}
+        </div>
+      )}
+
       {/* Mobile Modal Overlay & Menu Content */}
-      {menuOpen && (
-        <div className="fixed inset-0 w-screen h-screen z-[100] bg-black/70 backdrop-blur-md flex items-center justify-center">
+      {showMobileMenu && menuOpen && (
+        <div className="fixed inset-0 w-screen h-screen z-[100] bg-black/70 backdrop-blur-md flex items-start justify-center pt-12">
           {/* Menu Content */}
-          <div className="relative bg-black/90 rounded-3xl shadow-[0_8px_40px_8px_rgba(80,120,255,0.15)] border border-white/10 px-6 pt-8 pb-8 w-[90vw] max-w-sm mx-auto animate-menuOpen flex flex-col items-center">
+          <div className={`relative bg-black/90 rounded-3xl shadow-[0_8px_40px_8px_rgba(80,120,255,0.15)] border border-white/10 px-6 pt-8 pb-8 w-[90vw] max-w-sm mx-auto flex flex-col items-center ${
+            isClosing ? 'animate-slideUp' : 'animate-slideDown'
+          }`}>
             {/* Close Icon (absolute, always visible in menu box) */}
             <button
               className="absolute top-4 right-4 z-[120] text-white"
-              onClick={() => setMenuOpen(false)}
+              onClick={handleCloseMenu}
               aria-label="Close menu"
             >
               <svg
@@ -163,26 +179,28 @@ const Navbar = ({ data }) => {
                   key={`mobile_${item.name}_${index}`}
                   href={item.link}
                   className="text-white text-base font-medium py-2 w-full text-center rounded-lg hover:bg-white/10 transition-colors"
-                  onClick={() => setMenuOpen(false)}
+                  onClick={handleCloseMenu}
                 >
                   {item.name}
                 </a>
               ))}
             </nav>
-            <button
-              className="mt-6 w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-800 rounded-xl font-semibold text-base text-white transition hover:brightness-125 hover:bg-[#4a5568] shadow"
-              aria-label="My Labs"
-              onClick={() => {
-                navigate("/dev-tools");
-                setMenuOpen(false);
-              }}
-            >
-              {/* Test Tube/Beaker Icon */}
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3v6.75m0 0L5.25 21m4.5-11.25h4.5m0 0L18.75 21m-4.5-11.25V3" />
-              </svg>
-              My Labs
-            </button>
+            {showLabsButton && (
+              <button
+                className="mt-6 w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-800 rounded-xl font-semibold text-base text-white transition hover:brightness-125 hover:bg-[#4a5568] shadow"
+                aria-label="Labs"
+                onClick={() => {
+                  navigate("/labs");
+                  handleCloseMenu();
+                }}
+              >
+                {/* Test Tube/Beaker Icon */}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3v6.75m0 0L5.25 21m4.5-11.25h4.5m0 0L18.75 21m-4.5-11.25V3" />
+                </svg>
+                Labs
+              </button>
+            )}
           </div>
         </div>
       )}
@@ -209,8 +227,34 @@ const Navbar = ({ data }) => {
     60% { stroke-dashoffset: 0; }
     100% { stroke-dashoffset: 0; }
   }
+  @keyframes slideDown {
+    0% { 
+      opacity: 0; 
+      transform: translateY(-100px); 
+    }
+    100% { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+  }
+  @keyframes slideUp {
+    0% { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+    100% { 
+      opacity: 0; 
+      transform: translateY(-100px); 
+    }
+  }
   .animate-r-loader {
     animation: r-loader 1.6s cubic-bezier(0.4,0,0.2,1) infinite;
+  }
+  .animate-slideDown {
+    animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  .animate-slideUp {
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
 `}
 </style>

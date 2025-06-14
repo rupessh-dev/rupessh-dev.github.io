@@ -18,10 +18,7 @@ const Footer = ({ data }) => {
         </div>
       </div>
 
-      {/* Animated background effect */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-50"></div>
-      </div>
+
 
       {/* Add custom animations */}
       <style>
