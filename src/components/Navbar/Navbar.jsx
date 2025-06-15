@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 const Navbar = ({ data, showLabsButton = true, showMobileMenu = true }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     // Check initial scroll position
@@ -46,7 +47,36 @@ const Navbar = ({ data, showLabsButton = true, showMobileMenu = true }) => {
   // Handler for Home click
   const handleHomeClick = () => {
     handleCloseMenu();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (location.pathname !== '/') {
+      navigate('/');
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Handler for section navigation
+  const handleSectionClick = (link) => {
+    handleCloseMenu();
+    
+    // If we're not on home page, navigate there first
+    if (location.pathname !== '/') {
+      navigate('/');
+      // Wait for navigation then scroll
+      setTimeout(() => {
+        const sectionId = link.replace('#', '');
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    } else {
+      // Already on home page, just scroll
+      const sectionId = link.replace('#', '');
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
   };
 
   return (
@@ -59,27 +89,13 @@ const Navbar = ({ data, showLabsButton = true, showMobileMenu = true }) => {
       <div className="flex items-center gap-0.5">
         {/* Animated R Logo */}
         <div className="flex items-center justify-center w-8 h-8 p-0 m-0">
-        <a href="/">
-          <svg className="w-10 h-10 block align-middle" viewBox="0 0 100 100" fill="none" style={{ background: 'none', display: 'block', verticalAlign: 'middle' }}>
-            <defs>
-              <linearGradient id="navbar-r-gradient" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#a259ff" />
-                <stop offset="0.5" stopColor="#6ec1e4" />
-                <stop offset="1" stopColor="#ff6ec4" />
-              </linearGradient>
-            </defs>
-            <path
-              d="M30 80 V20 H60 Q80 20 70 40 Q60 60 30 60 Q60 60 75 80"
-              stroke="url(#navbar-r-gradient)"
-              strokeWidth="8"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeDasharray="320"
-              strokeDashoffset="0"
-              className="animate-r-loader"
+          <a href="/">
+            <img 
+              src="/logo.webp" 
+              alt="Logo" 
+              className="w-10 h-10 block align-middle transition-transform duration-300 hover:scale-110"
+              style={{ background: 'none', display: 'block', verticalAlign: 'middle' }}
             />
-          </svg>
           </a>
         </div>
       </div>
@@ -87,13 +103,13 @@ const Navbar = ({ data, showLabsButton = true, showMobileMenu = true }) => {
       {/* Desktop Nav */}
       <div className="hidden lg:flex items-center gap-6">
         {data?.menu?.map((item, index) => (
-          <a
+          <button
             key={`desktop_${item.name}_${index}`}
-            href={item.link}
-            className="text-white text-sm font-medium leading-normal hover:text-blue-300 transition-colors"
+            onClick={() => handleSectionClick(item.link)}
+            className="text-white text-sm font-medium leading-normal hover:text-blue-300 transition-colors cursor-pointer"
           >
             {item.name}
-          </a>
+          </button>
         ))}
         {showLabsButton && (
           <button
@@ -175,14 +191,13 @@ const Navbar = ({ data, showLabsButton = true, showMobileMenu = true }) => {
                 Home
               </button>
               {data?.menu?.map((item, index) => (
-                <a
+                <button
                   key={`mobile_${item.name}_${index}`}
-                  href={item.link}
+                  onClick={() => handleSectionClick(item.link)}
                   className="text-white text-base font-medium py-2 w-full text-center rounded-lg hover:bg-white/10 transition-colors"
-                  onClick={handleCloseMenu}
                 >
                   {item.name}
-                </a>
+                </button>
               ))}
             </nav>
             {showLabsButton && (

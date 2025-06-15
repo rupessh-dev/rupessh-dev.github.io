@@ -402,23 +402,23 @@ const PregnancyCalculator = () => {
                 <Navbar data={{ menu: [] }} showLabsButton={false} showMobileMenu={false} />
 
                 {/* Main Content */}
-                <div className="px-4 md:px-8 lg:px-16 xl:px-40 pt-24 pb-16">
+                <div className="px-3 sm:px-4 md:px-8 lg:px-16 xl:px-40 pt-20 md:pt-24 pb-12 md:pb-16">
                     <div className="max-w-4xl mx-auto">
                         {/* Header */}
-                        <div className="text-center mb-12">
-                            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                        <div className="text-center mb-8 md:mb-12">
+                            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 md:mb-4">
                                 <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-pink-400 bg-clip-text text-transparent">
                                     Pregnancy Calculator
                                 </span>
                             </h1>
-                            <p className="text-gray-300 text-sm mx-auto">
+                            <p className="text-gray-300 text-xs md:text-sm mx-auto px-4">
                                 Calculate your due date, track your pregnancy progress, and get personalized insights
                             </p>
                         </div>
 
                         {/* Input Form */}
-                        <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 md:p-8 mb-8">
-                            <h2 className="text-2xl font-semibold text-white mb-6">Enter Your Information</h2>
+                        <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-4 md:p-6 lg:p-8 mb-6 md:mb-8">
+                            <h2 className="text-xl md:text-2xl font-semibold text-white mb-4 md:mb-6">Enter Your Information</h2>
                             
                             {/* General Error */}
                             {errors.general && (
@@ -462,7 +462,7 @@ const PregnancyCalculator = () => {
                             </div>
 
                             {/* Date Inputs */}
-                            <div className="grid md:grid-cols-2 gap-6 mb-6">
+                            <div className="grid md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
                                 {inputType === 'lmp' ? (
                                     <div>
                                         <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -551,7 +551,7 @@ const PregnancyCalculator = () => {
                                         <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3-3m0 0l-3 3m3-3v12" />
                                         </svg>
-                                        <span className="text-sm">Save my data on this device</span>
+                                        <span className="text-sm">Save data on this device</span>
                                     </div>
                                 </label>
                                 <p className="text-xs text-gray-400 mt-1 ml-7">
@@ -579,7 +579,7 @@ const PregnancyCalculator = () => {
 
                         {/* Results */}
                         {results && (
-                            <div className="space-y-6">
+                            <div className="space-y-4 md:space-y-6">
                                 <PregnancySummary results={results} formatDate={formatDate} />
                                 <ProgressBar results={results} />
                                 <GenderPrediction results={results} />

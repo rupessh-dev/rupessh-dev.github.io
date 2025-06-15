@@ -4,7 +4,7 @@ import data from "./data/data";
 import { useState, useEffect } from "react";
 import GradientLoader from "./utils/loader";
 import { enableBasicSecurity } from "./utils/secure";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import ComingSoon from "./components/ComingSoon";
 import ToolsMenu from "./components/ToolsMenu";
 import PregnancyCalculator from "./components/Tools/PregnancyCalculator/PregnancyCalculator";
@@ -19,7 +19,7 @@ function App() {
   }, []);
   return (
     <ModalProvider>
-      <BrowserRouter>
+      <HashRouter>
         <div style={{ position: "relative", minHeight: "100vh" }}>
           <OfflineAlert />
           {loading && <GradientLoader />}
@@ -36,7 +36,7 @@ function App() {
             </Routes>
           )}
         </div>
-      </BrowserRouter>
+      </HashRouter>
     </ModalProvider>
   );
 }

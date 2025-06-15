@@ -8,8 +8,6 @@ import AnimatedBackground from "./AnimatedBackground";
 const ToolsMenu = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredTools, setFilteredTools] = useState(toolsMenu);
-    const [deferredPrompt, setDeferredPrompt] = useState(null);
-    const [showInstallButton, setShowInstallButton] = useState(false);
     const navigate = useNavigate();
 
     // Filter tools based on search term
@@ -20,88 +18,8 @@ const ToolsMenu = () => {
         setFilteredTools(filtered);
     }, [searchTerm]);
 
-    // PWA Installation logic
-    useEffect(() => {
-        const handleBeforeInstallPrompt = (e) => {
-            console.log('beforeinstallprompt event fired');
-            // Prevent the mini-infobar from appearing on mobile
-            e.preventDefault();
-            // Stash the event so it can be triggered later
-            setDeferredPrompt(e);
-            // Show the install button
-            setShowInstallButton(true);
-        };
-
-        const handleAppInstalled = () => {
-            console.log('PWA was installed');
-            // Hide the install button after installation
-            setShowInstallButton(false);
-            setDeferredPrompt(null);
-        };
-
-        // Listen for the beforeinstallprompt event
-        window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-        window.addEventListener('appinstalled', handleAppInstalled);
-
-        // Check if app is already installed or running in standalone mode
-        const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-        const isInWebAppiOS = window.navigator.standalone === true;
-        const isInWebAppChrome = window.matchMedia('(display-mode: standalone)').matches;
-        
-        if (isStandalone || isInWebAppiOS || isInWebAppChrome) {
-            console.log('App is already installed or running in standalone mode');
-            setShowInstallButton(false);
-        } else {
-            // For browsers that don't support beforeinstallprompt (like iOS Safari)
-            // Show install button by default, but it will show manual instructions
-            setShowInstallButton(true);
-        }
-
-        return () => {
-            window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-            window.removeEventListener('appinstalled', handleAppInstalled);
-        };
-    }, []);
-
     const handleToolClick = (link) => {
         navigate(link);
-    };
-
-    // Handle PWA installation
-    const handleInstallApp = async () => {
-        if (deferredPrompt) {
-            try {
-                // Show the install prompt
-                deferredPrompt.prompt();
-                // Wait for the user to respond to the prompt
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    console.log('User accepted the install prompt');
-                } else {
-                    console.log('User dismissed the install prompt');
-                }
-                // Clear the deferredPrompt
-                setDeferredPrompt(null);
-                setShowInstallButton(false);
-            } catch (error) {
-                console.error('Error during installation:', error);
-            }
-        } else {
-            // Provide platform-specific instructions
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-            const isAndroid = /Android/.test(navigator.userAgent);
-            
-            let instructions = '';
-            if (isIOS) {
-                instructions = 'To install this app on iOS:\n\n1. Tap the Share button (square with arrow)\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add" to confirm';
-            } else if (isAndroid) {
-                instructions = 'To install this app on Android:\n\n1. Tap the menu (⋮) in your browser\n2. Select "Add to Home screen" or "Install app"\n3. Follow the prompts';
-            } else {
-                instructions = 'To install this app:\n\n1. Look for an install icon in your browser\'s address bar\n2. Or open browser menu and select "Install app"\n3. Follow the prompts';
-            }
-            
-            alert(instructions);
-        }
     };
 
     // Icon mapping for different tool types
@@ -155,24 +73,12 @@ const ToolsMenu = () => {
                     {/* Header Section */}
                     <div className="text-center mb-12">
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 flex items-center justify-center gap-1">
-                            {/* Animated R SVG */}
-                            <svg className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20" viewBox="0 0 100 100" fill="none">
-                                <defs>
-                                    <linearGradient id="labs-r-gradient" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-                                        <stop stopColor="#a259ff" />
-                                        <stop offset="0.5" stopColor="#6ec1e4" />
-                                        <stop offset="1" stopColor="#ff6ec4" />
-                                    </linearGradient>
-                                </defs>
-                                <path
-                                    d="M30 80 V20 H60 Q80 20 70 40 Q60 60 30 60 Q60 60 75 80"
-                                    stroke="url(#labs-r-gradient)"
-                                    strokeWidth="8"
-                                    fill="none"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                            </svg>
+                            {/* Logo */}
+                            <img 
+                                src="/logo.webp" 
+                                alt="Logo" 
+                                className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 transition-transform duration-300 hover:scale-110"
+                            />
                             <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-pink-400 bg-clip-text text-transparent">
                                 Labs
                             </span>
@@ -180,21 +86,7 @@ const ToolsMenu = () => {
                         <p className="text-gray-300 text-sm md:text-sm mx-auto mb-6">
                             Explore a collection of powerful tools designed to make your life easier
                         </p>
-                        
-                        {/* Install App Button */}
-                        {showInstallButton && (
-                            <div className="flex justify-center">
-                                <button
-                                    onClick={handleInstallApp}
-                                    className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-xl text-white font-medium transition-all duration-300 hover:scale-105 shadow-lg shadow-purple-500/25"
-                                >
-                                    <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                    </svg>
-                                    Install App
-                                </button>
-                            </div>
-                        )}
+
                     </div>
 
                     {/* Search Bar */}
@@ -221,29 +113,35 @@ const ToolsMenu = () => {
                             <div
                                 key={index}
                                 onClick={() => handleToolClick(tool.link)}
-                                className="group cursor-pointer bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 hover:bg-gray-800/70 hover:border-purple-500/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/10"
+                                className="group cursor-pointer bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 hover:bg-gray-800/70 hover:border-transparent hover:bg-gradient-to-r hover:from-purple-500/20 hover:via-blue-500/20 hover:to-pink-500/20 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/10 relative overflow-hidden"
                             >
-                                {/* Tool Icon */}
-                                <div className="mb-4 text-gray-400 group-hover:text-purple-400 transition-colors duration-300">
-                                    {getToolIcon(tool.icon)}
-                                </div>
+                                {/* Gradient Border Effect */}
+                                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-400 via-blue-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+                                <div className="absolute inset-[1px] rounded-2xl bg-gray-900/90 group-hover:bg-gray-800/90 transition-colors duration-300"></div>
+                                
+                                <div className="relative z-10">
+                                    {/* Tool Icon */}
+                                    <div className="mb-4 text-gray-400 group-hover:text-purple-400 transition-colors duration-300">
+                                        {getToolIcon(tool.icon)}
+                                    </div>
 
-                                {/* Tool Name */}
-                                <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-purple-300 transition-colors duration-300">
-                                    {tool.name}
-                                </h3>
+                                    {/* Tool Name */}
+                                    <h3 className="text-xl font-semibold text-white mb-2 group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:via-blue-400 group-hover:to-pink-400 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
+                                        {tool.name}
+                                    </h3>
 
-                                {/* Tool Description (optional) */}
-                                <p className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-300">
-                                    Click to use this tool
-                                </p>
+                                    {/* Tool Description (optional) */}
+                                    <p className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-300">
+                                        Click to use this tool
+                                    </p>
 
-                                {/* Hover Arrow */}
-                                <div className="mt-4 flex items-center text-purple-400 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-0 group-hover:translate-x-2">
-                                    <span className="text-sm font-medium">Use Tool</span>
-                                    <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                    </svg>
+                                    {/* Hover Arrow */}
+                                    <div className="mt-4 flex items-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-0 group-hover:translate-x-2">
+                                        <span className="text-sm font-medium bg-gradient-to-r from-purple-400 via-blue-400 to-pink-400 bg-clip-text text-transparent">Use Tool</span>
+                                        <svg className="w-4 h-4 ml-1 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
                         ))}
