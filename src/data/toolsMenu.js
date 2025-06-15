@@ -7,17 +7,22 @@ const toolsMenu = [
     {
         name: "BMI Calculator",
         icon: "bmi",
-        link: "/coming-soon"
+        link: "/labs/bmi-calculator"
     },
     {
         name: "Age Calculator",
         icon: "age",
-        link: "/coming-soon"
+        link: "/labs/age-calculator"
     },
     {
         name: "Password Generator",
         icon: "password",
-        link: "/coming-soon"
+        link: "/labs/password-generator"
+    },
+    {
+        name: "Markdown Editor",
+        icon: "markdown",
+        link: "/labs/markdown-editor"
     }
 ]
 export default toolsMenu;

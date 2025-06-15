@@ -5,35 +5,51 @@ import cssnano from "cssnano";
 import { compression } from "vite-plugin-compression2";
 import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa';
+
 export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
     VitePWA({
-      base: './',
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'robots.txt', 'icons/icon-192x192.png', 'icons/icon-512x512.png'],
+      devOptions: {
+        enabled: true
+      },
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2,webp}'],
+        cleanupOutdatedCaches: true,
+        sourcemap: true
+      },
+      includeAssets: ['favicon.svg', 'icons/*.{png,svg, webp}'],
       manifest: {
         name: 'R Labs',
         short_name: 'R Labs',
-        start_url: './',
-        display: 'standalone',
-        background_color: '#ffffff',
+        description: 'R Labs Portfolio and Tools',
         theme_color: '#317EFB',
+        background_color: '#000000',
+        display: 'standalone',
         orientation: 'portrait',
+        start_url: '/#/labs',
         icons: [
           {
-            src: 'icons/icon-192x192.png',
+            src: '/logo-192.webp',
             sizes: '192x192',
-            type: 'image/png',
+            type: 'image/webp',
+            purpose: 'any maskable'
           },
           {
-            src: 'icons/icon-512x512.png',
+            src: '/logo-512.webp',
             sizes: '512x512',
-            type: 'image/png',
-          },
+            type: 'image/webp',
+            purpose: 'any maskable'
+          }
         ],
+        screenshots: [],
+        shortcuts: [],
+        id: '/',
+        scope: '/'
       },
+      strategies: 'generateSW',
     }),
     compression({
       algorithm: "brotliCompress",
@@ -51,11 +67,6 @@ export default defineConfig({
   base: "/",
   build: {
     rollupOptions: {
-      // output: {
-      //   manualChunks: {
-      //     vendor: ["react", "react-dom"],
-      //   },
-      // },
       treeshake: true,
     },
     reportCompressedSize: true,

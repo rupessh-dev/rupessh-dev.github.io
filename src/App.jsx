@@ -8,6 +8,10 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import ComingSoon from "./components/ComingSoon";
 import ToolsMenu from "./components/ToolsMenu";
 import PregnancyCalculator from "./components/Tools/PregnancyCalculator/PregnancyCalculator";
+import BmiCalculator from "./components/Tools/BmiCalculator/BmiCalculator";
+import AgeCalculator from "./components/Tools/AgeCalculator/AgeCalculator";
+import PasswordGenerator from "./components/Tools/PasswordGenerator/PasswordGenerator";
+import MarkdownEditor from "./components/Tools/MarkdownEditor/MarkdownEditor";
 import { ModalProvider } from "./components/ModalProvider";
 import { OfflineAlert } from "./components/OfflineAlert";
 
@@ -33,6 +37,10 @@ function App() {
               <Route path="/coming-soon" element={<ComingSoon />} />
               <Route path="/labs" element={<ToolsMenu />} />
               <Route path="/labs/pregnancy-calculator" element={<PregnancyCalculator />} />
+              <Route path="/labs/bmi-calculator" element={<BmiCalculator />} />
+              <Route path="/labs/age-calculator" element={<AgeCalculator />} />
+              <Route path="/labs/password-generator" element={<PasswordGenerator />} />
+              <Route path="/labs/markdown-editor" element={<MarkdownEditor />} />
             </Routes>
           )}
         </div>
